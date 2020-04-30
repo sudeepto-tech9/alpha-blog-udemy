@@ -44,4 +44,12 @@ class ArticlesController < ApplicationController
       render 'edit'
     end
   end
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    # 'rails routes' command articles_path = Prefix_path . So if the prefix is edit_article, then the path would edit_article_path
+    redirect_to articles_path
+  end
 end
