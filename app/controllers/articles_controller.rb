@@ -1,10 +1,13 @@
 class ArticlesController < ApplicationController
+
+  # before_action helper method runs the metioned method inside the actions specified as the first statement.
+  before_action :set_article, only: [:show, :edit, :update, :destroy]
+
   def index
     @articles = Article.all
   end
 
   def show
-    @article = Article.find(params[:id])
   end
 
   def new
@@ -14,7 +17,7 @@ class ArticlesController < ApplicationController
   def create
     # Need to whitelist params that we need to persist in our database.
     # Otherwise, we'll get ForbiddenAttributesError (Raised when forbidden attributes are used for mass assignment.)
-    @article = Article.new(params.require(:article).permit(:title, :description))
+    @article = Article.new(article_params)
 
     if @article.save
       # This line inspects the instance variable value to the HTML
@@ -32,12 +35,10 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    @article = Article.find(params[:id])
   end
 
   def update
-    @article = Article.find(params[:id])
-    if @article.update(params.require(:article).permit(:title, :description))
+    if @article.update(article_params)
       flash[:notice] = "Article was updated successfully"
       redirect_to @article
     else
@@ -46,10 +47,19 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
 
     # 'rails routes' command articles_path = Prefix_path . So if the prefix is edit_article, then the path would edit_article_path
     redirect_to articles_path
+  end
+
+  private
+
+  def set_article
+    @article = Article.find(params[:id])
+  end
+
+  def article_params
+    params.require(:article).permit(:title, :description)
   end
 end
