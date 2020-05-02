@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # The below syntax also provides REST-ful routes to resouce 'articles'
   resources :articles
   get 'signup', to: 'users#new'
-  resousces: users, except: [:new]
+  resources :users, except: [:new]
 end
 
 # Conventional Expectations
