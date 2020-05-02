@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row justify-content-center">
   <div class="col-10">
-    <%= render 'shared/errors' %>
+    <%= render 'shared/errors', obj: @article %>
     <%# The belown syntax for form_with makes sure that we submit the data to 'update' action with all the updated fiels. %>
     <%# Alternate syntax form_with(model: @article, local: true) do |f| %>
     <%= form_with model: @article, class: "shadow p-3 mb-3 rounded edit-form", local: true do |f| %>
